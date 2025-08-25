@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Karen's Study Planner</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
@@ -14,40 +14,41 @@
 
   <section class="calendar">
     <h2>📅 Master Calendar</h2>
-    <div class="legend">
-      <span class="work">Work Hours</span>
-      <span class="rnbp">RNBP Study</span>
-      <span class="respite">Respite Study</span>
-      <span class="class">Respite Class</span>
-      <span class="inperson">In-Person</span>
-      <span class="rest">Rest</span>
-    </div>
     <div class="calendar-grid">
-      <!-- Sample week block -->
-      <div class="day work">Mon 8–4</div>
-      <div class="day rnbp">Mon 5:30–7</div>
-      <div class="day respite">Mon 7:30–8:30</div>
-      <!-- Repeat for other days -->
+      <button class="day" onclick="showPlan('2025-09-08')">Sept 8</button>
+      <button class="day" onclick="showPlan('2025-09-09')">Sept 9</button>
+      <button class="day" onclick="showPlan('2025-09-10')">Sept 10</button>
+      <button class="day" onclick="showPlan('2025-09-11')">Sept 11</button>
+      <button class="day" onclick="showPlan('2025-09-12')">Sept 12</button>
+      <button class="day" onclick="showPlan('2025-09-13')">Sept 13</button>
+      <button class="day" onclick="showPlan('2025-09-14')">Sept 14</button>
     </div>
-  </section>
-
-  <section class="focus">
-    <h2>📚 Weekly Focus</h2>
-    <ul>
-      <li><strong>Sept 8–14:</strong> Begin RNBP modules, Respite WIL prep</li>
-      <li><strong>Sept 15–21:</strong> CPR weekend, light RNBP assignments</li>
-      <li><strong>Oct 6–12:</strong> Midterm prep + Emergency Situations module</li>
-      <!-- Add more weeks -->
-    </ul>
-  </section>
-
-  <section class="downloads">
-    <h2>📥 Downloads</h2>
-    <p><a href="#">Download Word Calendar</a></p>
+    <div id="daily-plan" class="plan-box"></div>
   </section>
 
   <footer>
-    <p>Made with 💙 by Karen & Copilot</p>
+    <p>Made with 💙 by Karen</p>
   </footer>
+
+  <script>
+    const plans = {
+      "2025-09-08": "🧭 RNBP Orientation at 1pm. Evening: Respite intro readings.",
+      "2025-09-09": "📘 RNBP: NRSG 103 readings. Respite: Lesson 1 prep.",
+      "2025-09-10": "📗 RNBP: NRSG 106 module review. Light Respite quiz.",
+      "2025-09-11": "📙 RNBP: NRSG 120 discussion post. Respite: Lesson 2 async.",
+      "2025-09-12": "📚 RNBP: Quiz prep. Respite: Cultural Competence module.",
+      "2025-09-13": "🧪 In-person Respite WIL Prep (full day). No evening study.",
+      "2025-09-14": "📝 RNBP: Assignment outline. Respite: catch-up readings."
+    };
+
+    function showPlan(date) {
+      const plan = plans[date] || "No plan available for this day.";
+      document.getElementById("daily-plan").innerHTML = `<h3>📅 ${date}</h3><p>${plan}</p>`;
+    }
+
+    // Auto-load today's plan
+    const today = new Date().toISOString().split('T')[0];
+    if (plans[today]) showPlan(today);
+  </script>
 </body>
 </html>
