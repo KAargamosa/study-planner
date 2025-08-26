@@ -2,117 +2,130 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Weekly Progress Tracker</title>
+  <title>Weekly Task Progress</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      padding: 20px;
-    }
-    h2 {
-      text-align: center;
-    }
-    .task {
-      background: white;
-      border: 1px solid #ccc;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 8px;
-    }
-    .progress-bar {
-      background: #eee;
-      border-radius: 8px;
-      height: 20px;
-      width: 100%;
-      margin-top: 8px;
-      overflow: hidden;
-    }
-    .progress {
-      background: #4caf50;
-      height: 100%;
-      width: 0%;
-      transition: width 0.3s ease;
-    }
-    button {
-      margin: 5px;
-      padding: 5px 10px;
-      cursor: pointer;
-    }
-    #addTaskForm {
-      display: flex;
-      gap: 10px;
-      margin: 20px 0;
-    }
-    #addTaskForm input {
-      flex: 1;
-      padding: 8px;
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .task { margin-bottom: 10px; }
+    .progress-bar { width: 100%; background: #ddd; height: 20px; border-radius: 10px; overflow: hidden; }
+    .progress { height: 100%; background: #4caf50; width: 0%; }
+    .alert { color: red; font-weight: bold; margin-left: 10px; }
   </style>
 </head>
 <body>
-  <h2>Weekly Progress Tracker</h2>
-
-  <form id="addTaskForm">
-    <input type="text" id="taskName" placeholder="Enter new task..." required>
-    <input type="number" id="taskTarget" placeholder="Target (e.g., 7)" min="1" required>
-    <button type="submit">Add Task</button>
-  </form>
-
-  <div id="taskContainer"></div>
+  <h2>Weekly Tasks</h2>
+  <div id="tasks"></div>
+  <input type="text" id="newTask" placeholder="New task name">
+  <button onclick="addTask()">Add Task</button>
 
   <script>
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const STORAGE_KEY = "weeklyTasks";
+    const WEEK_KEY = "lastResetWeek";
+    const ALERT_SHOWN_KEY = "alertsShown";
 
-    function saveTasks() {
-      localStorage.setItem("tasks", JSON.stringify(tasks));
+    function getCurrentWeek() {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 1);
+      const week = Math.floor(((now - start) / 86400000 + start.getDay() + 1) / 7);
+      return `${now.getFullYear()}-W${week}`;
+    }
+
+    function loadTasks() {
+      const savedWeek = localStorage.getItem(WEEK_KEY);
+      const currentWeek = getCurrentWeek();
+
+      if (savedWeek !== currentWeek) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
+        localStorage.setItem(WEEK_KEY, currentWeek);
+        localStorage.setItem(ALERT_SHOWN_KEY, JSON.stringify({}));
+      }
+
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    }
+
+    function saveTasks(tasks) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    }
+
+    function saveAlertShown(taskId) {
+      const alerts = JSON.parse(localStorage.getItem(ALERT_SHOWN_KEY)) || {};
+      alerts[taskId] = true;
+      localStorage.setItem(ALERT_SHOWN_KEY, JSON.stringify(alerts));
+    }
+
+    function hasAlertShown(taskId) {
+      const alerts = JSON.parse(localStorage.getItem(ALERT_SHOWN_KEY)) || {};
+      return alerts[taskId] || false;
     }
 
     function renderTasks() {
-      const container = document.getElementById("taskContainer");
+      const container = document.getElementById("tasks");
       container.innerHTML = "";
+      const tasks = loadTasks();
+      const now = new Date();
 
       tasks.forEach((task, index) => {
         const taskDiv = document.createElement("div");
         taskDiv.className = "task";
 
-        taskDiv.innerHTML = `
-          <h3>${task.name}</h3>
-          <p>Progress: <span id="progress-${index}">${task.progress}</span> / ${task.target}</p>
-          <div class="progress-bar">
-            <div class="progress" id="bar-${index}" style="width: ${(task.progress / task.target) * 100}%"></div>
-          </div>
-          <button onclick="updateProgress(${index}, 1)">+1</button>
-          <button onclick="updateProgress(${index}, -1)">-1</button>
-          <button onclick="deleteTask(${index})">Delete</button>
-        `;
+        const label = document.createElement("label");
+        label.textContent = task.name + " ";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = task.done;
+        checkbox.onchange = () => {
+          task.done = checkbox.checked;
+          saveTasks(tasks);
+          renderTasks();
+        };
+
+        const progressBar = document.createElement("div");
+        progressBar.className = "progress-bar";
+        const progress = document.createElement("div");
+        progress.className = "progress";
+        progress.style.width = task.done ? "100%" : "0%";
+        progressBar.appendChild(progress);
+
+        // Time left calculation
+        const deadline = new Date(task.deadline);
+        const diff = deadline - now;
+        const hoursLeft = Math.floor(diff / 3600000);
+
+        const alertSpan = document.createElement("span");
+        alertSpan.className = "alert";
+
+        if (!task.done && diff > 0 && hoursLeft <= 24 && !hasAlertShown(index)) {
+          alertSpan.textContent = `⚠️ Due in ${hoursLeft}h`;
+          saveAlertShown(index); // Mark this alert as shown (only once)
+        }
+
+        taskDiv.appendChild(checkbox);
+        taskDiv.appendChild(label);
+        taskDiv.appendChild(progressBar);
+        taskDiv.appendChild(alertSpan);
 
         container.appendChild(taskDiv);
       });
     }
 
-    function updateProgress(index, amount) {
-      tasks[index].progress = Math.max(0, Math.min(tasks[index].target, tasks[index].progress + amount));
-      saveTasks();
+    function addTask() {
+      const input = document.getElementById("newTask");
+      const name = input.value.trim();
+      if (!name) return;
+
+      const tasks = loadTasks();
+      // Default: deadline is Sunday 23:59 this week
+      const now = new Date();
+      const sunday = new Date(now);
+      sunday.setDate(now.getDate() + (7 - now.getDay()));
+      sunday.setHours(23, 59, 59, 999);
+
+      tasks.push({ name, done: false, deadline: sunday.toISOString() });
+      saveTasks(tasks);
+      input.value = "";
       renderTasks();
     }
 
-    function deleteTask(index) {
-      tasks.splice(index, 1);
-      saveTasks();
-      renderTasks();
-    }
-
-    document.getElementById("addTaskForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const name = document.getElementById("taskName").value;
-      const target = parseInt(document.getElementById("taskTarget").value);
-      tasks.push({ name, target, progress: 0 });
-      saveTasks();
-      renderTasks();
-      this.reset();
-    });
-
-    // Initial render
     renderTasks();
   </script>
 </body>
