@@ -26,29 +26,5 @@
     <div id="daily-plan" class="plan-box"></div>
   </section>
 
-  <footer>
-    <p>Made with 💙 by Karen</p>
-  </footer>
-
-  <script>
-    const plans = {
-      "2025-09-08": "🧭 RNBP Orientation at 1pm. Evening: Respite intro readings.",
-      "2025-09-09": "📘 RNBP: NRSG 103 readings. Respite: Lesson 1 prep.",
-      "2025-09-10": "📗 RNBP: NRSG 106 module review. Light Respite quiz.",
-      "2025-09-11": "📙 RNBP: NRSG 120 discussion post. Respite: Lesson 2 async.",
-      "2025-09-12": "📚 RNBP: Quiz prep. Respite: Cultural Competence module.",
-      "2025-09-13": "🧪 In-person Respite WIL Prep (full day). No evening study.",
-      "2025-09-14": "📝 RNBP: Assignment outline. Respite: catch-up readings."
-    };
-
-    function showPlan(date) {
-      const plan = plans[date] || "No plan available for this day.";
-      document.getElementById("daily-plan").innerHTML = `<h3>📅 ${date}</h3><p>${plan}</p>`;
-    }
-
-    // Auto-load today's plan
-    const today = new Date().toISOString().split('T')[0];
-    if (plans[today]) showPlan(today);
-  </script>
-</body>
-</html>
+  <!-- 🔗 Notes Page Link -->
+  <section class="notes-link">
