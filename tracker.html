@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Daily Module Tracker</title>
+<title>Module Tracker</title>
 <style>
 :root{--blue:#0078D4;--gold:#FFC107;--bg:#F4F8FC;--card:#fff;--green:#28a745;--orange:#ff9800;--darkbg:#1f2937;--darktext:#f4f4f4;--shadow:0 6px 16px rgba(0,0,0,.08)}
 body{margin:0;font-family:Segoe UI,sans-serif;background:var(--bg);color:#1f2937;transition:background .3s,color .3s;}
@@ -45,7 +45,7 @@ header a{color:white;text-decoration:none;}
 </main>
 
 <script>
-// Shared dark mode
+// Dark mode
 function toggleDark(){
   document.body.classList.toggle('dark');
   localStorage.setItem('theme', document.body.classList.contains('dark')?'dark':'light');
