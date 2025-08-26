@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Daily Assignment Tracker</title>
+<title>Daily Assignment Planner</title>
 <style>
 :root {
   --blue:#0078D4; --gold:#FFC107; --bg:#F4F8FC; --card:#fff;
@@ -13,17 +13,14 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:Segoe UI,sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s;}
 body.dark{background:var(--darkbg);color:var(--darktext);}
-header{background:var(--blue);color:#fff;padding:24px;text-align:center}
-.toggle-btn{background:var(--blue);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;margin:10px 0;}
-.toggle-btn:hover{background:#005fa3}
+header{background:var(--blue);color:#fff;padding:20px;text-align:center}
+header a{color:white;text-decoration:none;}
+.toggle-btn{background:var(--blue);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;margin:6px;}
 .wrap{max-width:1000px;margin:22px auto;padding:0 16px}
 .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:18px;margin-bottom:16px}
 .weekly-summary{border-left:6px solid var(--green)}
 .summary-bar{height:18px;background:#e5e7eb;border-radius:9px;overflow:hidden;margin:.6rem 0}
 .summary-fill{height:100%;width:0;background:var(--green);transition:width .3s ease}
-.updates{border-left:6px solid var(--orange)}
-.updates ul{list-style:none;padding:0;margin:.4rem 0 0}
-.updates li{margin:.35rem 0}
 .day-section{border-left:6px solid var(--blue)}
 ul{list-style:none;padding:0;margin:0}
 li{display:flex;align-items:center;justify-content:space-between;margin:10px 0}
@@ -33,13 +30,12 @@ label{flex:1}
 .tag{padding:2px 6px;border-radius:4px;font-size:.75rem;font-weight:600;color:#fff;margin-right:6px;}
 .tag.rnbp{background:var(--blue);}
 .tag.respite{background:var(--gold);color:#000;}
-body.dark .due{background:#334155;color:#f4f4f4;}
 </style>
 </head>
 <body>
 <header>
-  <h1>📅 Daily Assignment Tracker</h1>
-  <p>Color‑coded tasks, weekly progress, and upcoming updates</p>
+  <h1><a href="index.html">📚 Karen’s Planner</a></h1>
+  <p>Plan, track, and review your studies</p>
   <button class="toggle-btn" onclick="toggleDark()">Toggle Dark Mode</button>
 </header>
 
@@ -48,16 +44,6 @@ body.dark .due{background:#334155;color:#f4f4f4;}
     <h2>📊 Weekly Progress</h2>
     <div class="summary-bar"><div id="weekly-fill" class="summary-fill"></div></div>
     <p id="weekly-count">0 of 0 tasks completed</p>
-  </section>
-
-  <section class="card updates">
-    <h2>🔮 Upcoming Lessons & Updates</h2>
-    <ul>
-      <li><span class="tag rnbp">RNBP</span> Sept 15 — NRSG 103 Quiz #1 opens</li>
-      <li><span class="tag rnbp">RNBP</span> Sept 18 — NRSG 106 Skills Lab</li>
-      <li><span class="tag rnbp">RNBP</span> Sept 20 — NRSG 120 Case Study due</li>
-      <li><span class="tag respite">Respite</span> Sept 16 — Lesson 3: Emergencies</li>
-    </ul>
   </section>
 
   <section class="card day-section">
@@ -70,20 +56,40 @@ body.dark .due{background:#334155;color:#f4f4f4;}
 </main>
 
 <script>
-function updateWeeklySummary(){
-  const boxes=document.querySelectorAll("input[type='checkbox']");
-  const total=boxes.length, checked=[...boxes].filter(b=>b.checked).length;
-  const pct= total? Math.round(checked/total*100):0;
-  document.getElementById('weekly-fill').style.width=pct+'%';
-  document.getElementById('weekly-count').textContent=`${checked} of ${total} tasks completed`;
-}
-document.querySelectorAll("input[type='checkbox']").forEach(cb=>cb.addEventListener('change',updateWeeklySummary));
-updateWeeklySummary();
+// Theme toggle
 function toggleDark(){
   document.body.classList.toggle('dark');
   localStorage.setItem('theme', document.body.classList.contains('dark')?'dark':'light');
 }
 if(localStorage.getItem('theme')==='dark'){document.body.classList.add('dark');}
+
+// Checkbox state with date
+const todayKey = new Date().toISOString().slice(0,10);
+document.querySelectorAll("input[type='checkbox']").forEach(cb=>{
+  const key = todayKey + ':' + cb.closest('h2').textContent + ':' + cb.parentNode.textContent.trim();
+  cb.checked = localStorage.getItem(key) === 'true';
+  cb.addEventListener('change',()=>{
+    localStorage.setItem(key, cb.checked);
+    updateWeeklyProgress();
+  });
+});
+
+// Weekly progress from last 7 days
+function updateWeeklyProgress(){
+  const now = new Date(); let total=0, done=0;
+  for(let i=0;i<7;i++){
+    const d = new Date(now); d.setDate(now.getDate()-i);
+    const prefix = d.toISOString().slice(0,10);
+    for(let j=0;j<localStorage.length;j++){
+      const k = localStorage.key(j);
+      if(k.startsWith(prefix)){ total++; if(localStorage.getItem(k)==='true') done++; }
+    }
+  }
+  const pct = total? Math.round(done/total*100) : 0;
+  document.getElementById('weekly-fill').style.width = pct + '%';
+  document.getElementById('weekly-count').textContent = `${done} of ${total} tasks completed (last 7 days)`;
+}
+updateWeeklyProgress();
 </script>
 </body>
 </html>
