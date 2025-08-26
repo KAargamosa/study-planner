@@ -12,14 +12,14 @@
     <p>Jot down your thoughts, assignments, or reflections</p>
   </header>
 
-  <section class="note-section">
+  <section>
     <label for="program">Program:</label>
     <select id="program">
       <option value="RNBP">RNBP</option>
       <option value="Respite">Respite Care</option>
     </select>
 
-    <textarea id="noteArea" placeholder="Start typing your notes here..."></textarea>
+    <textarea id="noteArea" placeholder="Start typing your notes here..." rows="6" style="width:100%;"></textarea>
     <button onclick="saveNote()">Save Note</button>
     <div id="savedNotes"></div>
   </section>
