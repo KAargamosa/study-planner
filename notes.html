@@ -3,112 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Notes | Karen's Planner</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Notes</title>
   <style>
-    .note-section {
-      padding: 20px;
-    }
-
-    textarea {
-      width: 100%;
-      height: 150px;
-      margin-top: 10px;
-      padding: 10px;
-      font-size: 1em;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    button {
-      margin-top: 10px;
-      padding: 10px 15px;
-      background-color: #0078D4;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #noteLinks a {
-      display: block;
-      margin: 8px 0;
-      color: #0078D4;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    #noteLinks a:hover {
-      text-decoration: underline;
-    }
-
-    #noteDisplay {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #f0f8ff;
-      border-left: 4px solid #0078D4;
-    }
+    :root{--blue:#0078D4;--bg:#F4F8FC;--card:#fff;--shadow:0 6px 16px rgba(0,0,0,.08);--text:#1f2937;--muted:#64748b}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Segoe UI,system-ui,sans-serif;background:var(--bg);color:var(--text)}
+    header{background:var(--blue);color:#fff;padding:24px;text-align:center}
+    .wrap{max-width:900px;margin:22px auto;padding:0 16px}
+    .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:18px;margin-bottom:16px}
+    textarea{width:100%;min-height:150px;padding:12px;border:1px solid #e5e7eb;border-radius:8px;font:inherit}
+    select,button{padding:10px 12px;border-radius:8px;border:1px solid #e5e7eb;font:inherit}
+    button{background:var(--blue);color:#fff;border:none;cursor:pointer}
+    button:hover{background:#005fa3}
+    #links a{display:block;margin:6px 0;color:var(--blue);text-decoration:none;font-weight:600}
+    #links a:hover{text-decoration:underline}
+    #display{margin-top:12px;padding:12px;background:#eef6ff;border-left:4px solid var(--blue);border-radius:8px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin:.5rem 0}
   </style>
 </head>
 <body>
   <header>
     <h1>📝 Notes</h1>
-    <p>Jot down your thoughts, assignments, or reflections</p>
+    <p>Tag by program, auto time‑stamp, and quick archive</p>
   </header>
 
-  <section class="note-section">
-    <label for="program">Program:</label>
-    <select id="program">
-      <option value="RNBP">RNBP</option>
-      <option value="Respite">Respite Care</option>
-    </select>
+  <main class="wrap">
+    <section class="card">
+      <div class="row">
+        <label>Program:
+          <select id="program">
+            <option value="RNBP">RNBP</option>
+            <option value="Respite">Respite</option>
+          </select>
+        </label>
+      </div>
+      <textarea id="note" placeholder="Start typing your note..."></textarea>
+      <div class="row">
+        <button onclick="saveNote()">Save Note</button>
+      </div>
+    </section>
 
-    <textarea id="noteArea" placeholder="Start typing your notes here..."></textarea>
-    <button onclick="saveNote()">Save Note</button>
-
-    <h3>📌 Saved Notes</h3>
-    <div id="noteLinks"></div>
-    <div id="noteDisplay"></div>
-  </section>
+    <section class="card">
+      <h3>📌 Saved Notes</h3>
+      <div id="links"></div>
+      <div id="display"></div>
+    </section>
+  </main>
 
   <script>
-    function saveNote() {
-      const program = document.getElementById("program").value;
-      const note = document.getElementById("noteArea").value.trim();
-      if (!note) return;
-
-      const date = new Date().toLocaleString();
-      const id = Date.now().toString();
-      const saved = JSON.parse(localStorage.getItem("notes") || "{}");
-
-      saved[id] = { date, program, note };
-      localStorage.setItem("notes", JSON.stringify(saved));
-      document.getElementById("noteArea").value = "";
-      displayNoteLinks();
+    function saveNote(){
+      const program=document.getElementById('program').value;
+      const text=document.getElementById('note').value.trim();
+      if(!text) return;
+      const date=new Date().toLocaleString();
+      const id=Date.now().toString();
+      const store=JSON.parse(localStorage.getItem('notes')||'{}');
+      store[id]={program,date,text};
+      localStorage.setItem('notes',JSON.stringify(store));
+      document.getElementById('note').value='';
+      renderLinks();
     }
-
-    function displayNoteLinks() {
-      const saved = JSON.parse(localStorage.getItem("notes") || "{}");
-      const container = document.getElementById("noteLinks");
-      container.innerHTML = "";
-
-      Object.entries(saved).forEach(([id, entry]) => {
-        const link = document.createElement("a");
-        link.href = "#";
-        link.textContent = `${entry.date} [${entry.program}]`;
-        link.onclick = () => showNote(id);
-        container.appendChild(link);
+    function renderLinks(){
+      const store=JSON.parse(localStorage.getItem('notes')||'{}');
+      const container=document.getElementById('links'); container.innerHTML='';
+      Object.entries(store).sort((a,b)=>b[0]-a[0]).forEach(([id,n])=>{
+        const a=document.createElement('a'); a.href='#'; a.textContent=`${n.date} [${n.program}]`;
+        a.onclick=()=>show(id); container.appendChild(a);
       });
     }
-
-    function showNote(id) {
-      const saved = JSON.parse(localStorage.getItem("notes") || "{}");
-      const entry = saved[id];
-      const display = document.getElementById("noteDisplay");
-      display.innerHTML = `<strong>${entry.date} [${entry.program}]</strong><p>${entry.note}</p>`;
+    function show(id){
+      const n=JSON.parse(localStorage.getItem('notes')||'{}')[id];
+      document.getElementById('display').innerHTML=`<strong>${n.date} [${n.program}]</strong><p>${n.text.replace(/\n/g,'<br>')}</p>`;
     }
-
-    displayNoteLinks();
+    renderLinks();
   </script>
 </body>
 </html>
