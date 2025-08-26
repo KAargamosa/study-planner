@@ -4,62 +4,72 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Private Journal</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      background-color: #fdf6f0;
-    }
-
-    .journal-box {
-      padding: 20px;
-      background-color: #fff;
-      border-left: 4px solid #0078D4;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      margin: 20px;
-    }
-
-    textarea {
-      width: 100%;
-      height: 150px;
-      margin-top: 10px;
-      padding: 10px;
-      font-size: 1em;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    button {
-      margin-top: 10px;
-      padding: 10px 15px;
-      background-color: #0078D4;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #entries {
-      margin-top: 20px;
-    }
-
-    .entry {
-      background-color: #f0f8ff;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-left: 3px solid #0078D4;
-    }
+    :root{--blue:#0078D4;--bg:#fdf6f0;--card:#fff;--shadow:0 6px 16px rgba(0,0,0,.08);--text:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Segoe UI,system-ui,sans-serif;background:var(--bg);color:var(--text)}
+    header{background:var(--blue);color:#fff;padding:24px;text-align:center}
+    .wrap{max-width:900px;margin:22px auto;padding:0 16px}
+    .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:18px;margin-bottom:16px;border-left:6px solid var(--blue)}
+    textarea{width:100%;min-height:160px;padding:12px;border:1px solid #e5e7eb;border-radius:8px;font:inherit}
+    button{margin-top:10px;padding:10px 14px;border:none;border-radius:8px;background:var(--blue);color:#fff;cursor:pointer}
+    button:hover{background:#005fa3}
+    .entry{background:#f0f8ff;padding:12px;border-left:4px solid var(--blue);border-radius:8px;margin:10px 0}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
   </style>
 </head>
 <body>
   <header>
     <h1>🔐 Private Journal</h1>
-    <p>Your personal space — saved only on your device</p>
+    <p>Saved locally on your device, export anytime</p>
   </header>
 
-  <section class="journal-box">
-    <label for="journalEntry">Write your thoughts:</label>
-    <textarea id="journalEntry" placeholder="Reflect on your day, your clinical experience, or anything personal..."></textarea>
-    <button onclick="saveEntry()">Save Entry</button>
-    <div id="entries">
-<button onclick="exportJournal()">Export Journal</button>
+  <main class="wrap">
+    <section class="card">
+      <label for="entry">Write your thoughts:</label>
+      <textarea id="entry" placeholder="Reflect on your day, your clinical experience, or anything personal..."></textarea>
+      <div class="row">
+        <button onclick="save()">Save Entry</button>
+        <button onclick="exportJournal()">Export Journal</button>
+        <button onclick="clearAll()">Clear All (local)</button>
+      </div>
+    </section>
 
+    <section class="card">
+      <h3>📔 Your Entries</h3>
+      <div id="entries"></div>
+    </section>
+  </main>
+
+  <script>
+    function save(){
+      const text=document.getElementById('entry').value.trim(); if(!text) return;
+      const date=new Date().toLocaleString();
+      const list=JSON.parse(localStorage.getItem('journalEntries')||'[]');
+      list.unshift({date,text});
+      localStorage.setItem('journalEntries',JSON.stringify(list));
+      document.getElementById('entry').value=''; render();
+    }
+    function render(){
+      const list=JSON.parse(localStorage.getItem('journalEntries')||'[]');
+      const box=document.getElementById('entries'); box.innerHTML='';
+      list.forEach((e,idx)=>{
+        const div=document.createElement('div'); div.className='entry';
+        div.innerHTML=`<strong>${e.date}</strong><p>${e.text.replace(/\n/g,'<br>')}</p>`;
+        box.appendChild(div);
+      });
+    }
+    function exportJournal(){
+      const list=JSON.parse(localStorage.getItem('journalEntries')||'[]');
+      if(!list.length){alert('No journal entries to export.');return}
+      let content="Karen's Private Journal\n\n"; list.forEach(e=>{content+=`${e.date}\n${e.text}\n\n`});
+      const blob=new Blob([content],{type:'text/plain'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='Karen_Journal.txt'; a.click();
+    }
+    function clearAll(){
+      if(confirm('Clear all journal entries on this device?')){localStorage.removeItem('journalEntries'); render();}
+    }
+    render();
+  </script>
+</body>
+</html>
