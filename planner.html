@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Assignment Planner</title>
+  <title>Daily Assignment Tracker</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .assignment-section {
+    .day-section {
       margin-bottom: 30px;
       padding: 15px;
       background-color: #fff;
@@ -14,18 +14,54 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    .assignment-section h2 {
+    .day-section h2 {
       color: #0078D4;
     }
 
-    .assignment-section ul {
+    .day-section ul {
       list-style: none;
       padding-left: 0;
     }
 
-    .assignment-section li {
+    .day-section li {
       margin: 8px 0;
     }
 
-    .assignment-section input[type="checkbox"] {
-      margin-right
+    .day-section input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    .due-time {
+      font-size: 0.9em;
+      color: #555;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📅 Daily Assignment Tracker</h1>
+    <p>Stay on top of your tasks one day at a time</p>
+  </header>
+
+  <section class="day-section">
+    <h2>Monday, Sept 8</h2>
+    <ul>
+      <li><label><input type="checkbox" /> RNBP Orientation <span class="due-time">1:00 PM</span></label></li>
+      <li><label><input type="checkbox" /> Respite: Intro Reading <span class="due-time">Evening</span></label></li>
+    </ul>
+  </section>
+
+  <section class="day-section">
+    <h2>Tuesday, Sept 9</h2>
+    <ul>
+      <li><label><input type="checkbox" /> NRSG 103 Reading <span class="due-time">Morning</span></label></li>
+      <li><label><input type="checkbox" /> Respite Lesson 1 Prep <span class="due-time">Afternoon</span></label></li>
+    </ul>
+  </section>
+
+  <section class="day-section">
+    <h2>Wednesday, Sept 10</h2>
+    <ul>
+      <li><label><input type="checkbox" /> NRSG 106 Module Review <span class="due-time">Anytime</span></label></li>
+      <li><label><input type="checkbox" />
