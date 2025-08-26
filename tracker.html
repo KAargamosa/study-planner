@@ -3,84 +3,139 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Progress Tracker</title>
+  <title>Daily Module Progress Tracker</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .module-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      background-color: #fff;
-      border-left: 4px solid #0078D4;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    body {
+      background-color: #f4f8fc;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #0078D4;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .day-section {
+      margin: 20px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-left: 6px solid #0078D4;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .day-section h2 {
+      margin-top: 0;
+      color: #0078D4;
+      font-size: 1.4em;
+    }
+
+    .module-block {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #f9f9ff;
+      border-left: 4px solid #28a745;
+      border-radius: 5px;
+    }
+
+    .module-block h3 {
+      margin-top: 0;
+      color: #28a745;
+    }
+
+    label {
+      display: block;
+      margin: 6px 0;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.1);
+      margin-right: 8px;
+      accent-color: #0078D4;
     }
 
     .progress-bar {
       background-color: #e0e0e0;
       border-radius: 5px;
       overflow: hidden;
-      height: 20px;
+      height: 18px;
       margin-top: 10px;
     }
 
     .progress-fill {
       height: 100%;
-      background-color: #0078D4;
+      background-color: #28a745;
       width: 0%;
       transition: width 0.3s ease;
-    }
-
-    label {
-      display: block;
-      margin: 5px 0;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>📊 Module Progress Tracker</h1>
-    <p>Track your progress in each course independently</p>
+    <h1>📊 Daily Module Progress Tracker</h1>
+    <p>Track your study progress day by day</p>
   </header>
 
-  <!-- RNBP Modules -->
-  <section class="module-section">
-    <h2>📘 NRSG 103</h2>
-    <label><input type="checkbox" class="nrsg103" /> Readings Completed</label>
-    <label><input type="checkbox" class="nrsg103" /> Quiz Submitted</label>
-    <label><input type="checkbox" class="nrsg103" /> Discussion Post</label>
-    <div class="progress-bar"><div id="nrsg103-progress" class="progress-fill"></div></div>
+  <!-- SEPT 8 -->
+  <section class="day-section">
+    <h2>Monday, Sept 8</h2>
+
+    <div class="module-block">
+      <h3>📘 NRSG 103</h3>
+      <label><input type="checkbox" class="d8-nrsg103" /> Orientation Attended</label>
+      <label><input type="checkbox" class="d8-nrsg103" /> Intro Reading</label>
+      <div class="progress-bar"><div id="d8-nrsg103-progress" class="progress-fill"></div></div>
+    </div>
+
+    <div class="module-block">
+      <h3>🟡 Respite: Orientation</h3>
+      <label><input type="checkbox" class="d8-respite1" /> Welcome Video</label>
+      <label><input type="checkbox" class="d8-respite1" /> Module Survey</label>
+      <div class="progress-bar"><div id="d8-respite1-progress" class="progress-fill"></div></div>
+    </div>
   </section>
 
-  <section class="module-section">
-    <h2>📘 NRSG 106</h2>
-    <label><input type="checkbox" class="nrsg106" /> Skills Lab Attended</label>
-    <label><input type="checkbox" class="nrsg106" /> Module Quiz</label>
-    <label><input type="checkbox" class="nrsg106" /> Reflection Journal</label>
-    <div class="progress-bar"><div id="nrsg106-progress" class="progress-fill"></div></div>
+  <!-- SEPT 9 -->
+  <section class="day-section">
+    <h2>Tuesday, Sept 9</h2>
+
+    <div class="module-block">
+      <h3>📘 NRSG 103</h3>
+      <label><input type="checkbox" class="d9-nrsg103" /> Reading Completed</label>
+      <label><input type="checkbox" class="d9-nrsg103" /> Quiz Started</label>
+      <div class="progress-bar"><div id="d9-nrsg103-progress" class="progress-fill"></div></div>
+    </div>
+
+    <div class="module-block">
+      <h3>🟡 Respite: Lesson 1</h3>
+      <label><input type="checkbox" class="d9-respite1" /> Lesson Prep</label>
+      <label><input type="checkbox" class="d9-respite1" /> Reflection Notes</label>
+      <div class="progress-bar"><div id="d9-respite1-progress" class="progress-fill"></div></div>
+    </div>
   </section>
 
-  <section class="module-section">
-    <h2>📘 NRSG 120</h2>
-    <label><input type="checkbox" class="nrsg120" /> Mental Health Reading</label>
-    <label><input type="checkbox" class="nrsg120" /> Case Study</label>
-    <label><input type="checkbox" class="nrsg120" /> Final Quiz</label>
-    <div class="progress-bar"><div id="nrsg120-progress" class="progress-fill"></div></div>
-  </section>
+  <!-- SEPT 10 -->
+  <section class="day-section">
+    <h2>Wednesday, Sept 10</h2>
 
-  <!-- Respite Modules -->
-  <section class="module-section">
-    <h2>🟡 Respite: Orientation</h2>
-    <label><input type="checkbox" class="respite1" /> Welcome Video</label>
-    <label><input type="checkbox" class="respite1" /> Intro Quiz</label>
-    <label><input type="checkbox" class="respite1" /> Module Survey</label>
-    <div class="progress-bar"><div id="respite1-progress" class="progress-fill"></div></div>
-  </section>
+    <div class="module-block">
+      <h3>📘 NRSG 106</h3>
+      <label><input type="checkbox" class="d10-nrsg106" /> Module Review</label>
+      <label><input type="checkbox" class="d10-nrsg106" /> Skills Lab Prep</label>
+      <div class="progress-bar"><div id="d10-nrsg106-progress" class="progress-fill"></div></div>
+    </div>
 
-  <section class="module-section">
-    <h2>🟡 Respite: Cultural Competence</h2>
-    <label><input type="checkbox" class="respite2" /> Reading Completed</label>
-    <label><input type="checkbox" class="respite2" /> Scenario Review</label>
-    <label><input type="checkbox" class="respite2" /> Reflection Submitted</label>
-    <div class="progress-bar"><div id="respite2-progress" class="progress-fill"></div></div>
+    <div class="module-block">
+      <h3>🟡 Respite: Quiz</h3>
+      <label><input type="checkbox" class="d10-respite2" /> Quiz Attempted</label>
+      <label><input type="checkbox" class="d10-respite2" /> Review Submitted</label>
+      <div class="progress-bar"><div id="d10-respite2-progress" class="progress-fill"></div></div>
+    </div>
   </section>
 
   <script>
@@ -93,18 +148,19 @@
     }
 
     const modules = [
-      { class: "nrsg103", id: "nrsg103-progress" },
-      { class: "nrsg106", id: "nrsg106-progress" },
-      { class: "nrsg120", id: "nrsg120-progress" },
-      { class: "respite1", id: "respite1-progress" },
-      { class: "respite2", id: "respite2-progress" }
+      { class: "d8-nrsg103", id: "d8-nrsg103-progress" },
+      { class: "d8-respite1", id: "d8-respite1-progress" },
+      { class: "d9-nrsg103", id: "d9-nrsg103-progress" },
+      { class: "d9-respite1", id: "d9-respite1-progress" },
+      { class: "d10-nrsg106", id: "d10-nrsg106-progress" },
+      { class: "d10-respite2", id: "d10-respite2-progress" }
     ];
 
     modules.forEach(module => {
       document.querySelectorAll(`input.${module.class}`).forEach(cb =>
         cb.addEventListener("change", () => updateProgress(module.class, module.id))
       );
-      updateProgress(module.class, module.id); // initialize on load
+      updateProgress(module.class, module.id);
     });
   </script>
 </body>
