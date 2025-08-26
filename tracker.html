@@ -8,6 +8,10 @@
   <style>
     .module-section {
       margin-bottom: 30px;
+      padding: 15px;
+      background-color: #fff;
+      border-left: 4px solid #0078D4;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .progress-bar {
@@ -25,53 +29,58 @@
       transition: width 0.3s ease;
     }
 
-    select {
-      margin-left: 10px;
+    label {
+      display: block;
+      margin: 5px 0;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>✅ Progress Tracker</h1>
-    <p>Track your modules, assignments, and clinical hours</p>
+    <h1>📊 Module Progress Tracker</h1>
+    <p>Track your progress in each course independently</p>
   </header>
 
+  <!-- RNBP Modules -->
   <section class="module-section">
-    <h2>RNBP Modules</h2>
-    <label><input type="checkbox" class="rnbp" /> NRSG 103</label><br>
-    <label><input type="checkbox" class="rnbp" /> NRSG 106</label><br>
-    <label><input type="checkbox" class="rnbp" /> NRSG 120</label><br>
-    <label><input type="checkbox" class="rnbp" /> NRSG 107</label><br>
-    <label><input type="checkbox" class="rnbp" /> PHAR 202</label><br>
-    <div class="progress-bar"><div id="rnbp-progress" class="progress-fill"></div></div>
+    <h2>📘 NRSG 103</h2>
+    <label><input type="checkbox" class="nrsg103" /> Readings Completed</label>
+    <label><input type="checkbox" class="nrsg103" /> Quiz Submitted</label>
+    <label><input type="checkbox" class="nrsg103" /> Discussion Post</label>
+    <div class="progress-bar"><div id="nrsg103-progress" class="progress-fill"></div></div>
   </section>
 
   <section class="module-section">
-    <h2>Respite Care Modules</h2>
-    <label><input type="checkbox" class="respite" /> Orientation</label><br>
-    <label><input type="checkbox" class="respite" /> Cultural Competence</label><br>
-    <label><input type="checkbox" class="respite" /> Emergency Situations</label><br>
-    <label><input type="checkbox" class="respite" /> Medication Awareness</label><br>
-    <label><input type="checkbox" class="respite" /> Positive Behaviour Support</label><br>
-    <div class="progress-bar"><div id="respite-progress" class="progress-fill"></div></div>
+    <h2>📘 NRSG 106</h2>
+    <label><input type="checkbox" class="nrsg106" /> Skills Lab Attended</label>
+    <label><input type="checkbox" class="nrsg106" /> Module Quiz</label>
+    <label><input type="checkbox" class="nrsg106" /> Reflection Journal</label>
+    <div class="progress-bar"><div id="nrsg106-progress" class="progress-fill"></div></div>
   </section>
 
   <section class="module-section">
-    <h2>Assignments</h2>
-    <p>RNBP Paper:
-      <select>
-        <option>Not Started</option>
-        <option>In Progress</option>
-        <option>Submitted</option>
-      </select>
-    </p>
-    <p>Respite Final Reflection:
-      <select>
-        <option>Not Started</option>
-        <option>In Progress</option>
-        <option>Submitted</option>
-      </select>
-    </p>
+    <h2>📘 NRSG 120</h2>
+    <label><input type="checkbox" class="nrsg120" /> Mental Health Reading</label>
+    <label><input type="checkbox" class="nrsg120" /> Case Study</label>
+    <label><input type="checkbox" class="nrsg120" /> Final Quiz</label>
+    <div class="progress-bar"><div id="nrsg120-progress" class="progress-fill"></div></div>
+  </section>
+
+  <!-- Respite Modules -->
+  <section class="module-section">
+    <h2>🟡 Respite: Orientation</h2>
+    <label><input type="checkbox" class="respite1" /> Welcome Video</label>
+    <label><input type="checkbox" class="respite1" /> Intro Quiz</label>
+    <label><input type="checkbox" class="respite1" /> Module Survey</label>
+    <div class="progress-bar"><div id="respite1-progress" class="progress-fill"></div></div>
+  </section>
+
+  <section class="module-section">
+    <h2>🟡 Respite: Cultural Competence</h2>
+    <label><input type="checkbox" class="respite2" /> Reading Completed</label>
+    <label><input type="checkbox" class="respite2" /> Scenario Review</label>
+    <label><input type="checkbox" class="respite2" /> Reflection Submitted</label>
+    <div class="progress-bar"><div id="respite2-progress" class="progress-fill"></div></div>
   </section>
 
   <script>
@@ -83,13 +92,20 @@
       document.getElementById(progressId).style.width = percent + "%";
     }
 
-    document.querySelectorAll("input.rnbp").forEach(cb =>
-      cb.addEventListener("change", () => updateProgress("rnbp", "rnbp-progress"))
-    );
+    const modules = [
+      { class: "nrsg103", id: "nrsg103-progress" },
+      { class: "nrsg106", id: "nrsg106-progress" },
+      { class: "nrsg120", id: "nrsg120-progress" },
+      { class: "respite1", id: "respite1-progress" },
+      { class: "respite2", id: "respite2-progress" }
+    ];
 
-    document.querySelectorAll("input.respite").forEach(cb =>
-      cb.addEventListener("change", () => updateProgress("respite", "respite-progress"))
-    );
+    modules.forEach(module => {
+      document.querySelectorAll(`input.${module.class}`).forEach(cb =>
+        cb.addEventListener("change", () => updateProgress(module.class, module.id))
+      );
+      updateProgress(module.class, module.id); // initialize on load
+    });
   </script>
 </body>
 </html>
