@@ -4,163 +4,114 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Daily Module Progress Tracker</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      background-color: #f4f8fc;
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+    :root{--blue:#0078D4;--bg:#F4F8FC;--card:#fff;--shadow:0 6px 16px rgba(0,0,0,.08);--green:#28a745;--orange:#ff9800;--text:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Segoe UI,system-ui,sans-serif;background:var(--bg);color:var(--text)}
+    header{background:var(--blue);color:#fff;padding:24px;text-align:center}
+    .wrap{max-width:1000px;margin:22px auto;padding:0 16px}
 
-    header {
-      background-color: #0078D4;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+    .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:18px;margin-bottom:16px}
+    .timer{border-left:6px solid var(--orange);text-align:center}
+    .timer .display{font-size:2.4rem;font-weight:700;color:var(--blue);margin:10px 0}
+    .timer button{margin:6px;padding:10px 16px;border:none;border-radius:8px;background:var(--blue);color:#fff;cursor:pointer}
+    .timer button:hover{background:#005fa3}
 
-    .day-section {
-      margin: 20px;
-      padding: 20px;
-      background-color: #ffffff;
-      border-left: 6px solid #0078D4;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    }
-
-    .day-section h2 {
-      margin-top: 0;
-      color: #0078D4;
-      font-size: 1.4em;
-    }
-
-    .module-block {
-      margin-top: 15px;
-      padding: 10px;
-      background-color: #f9f9ff;
-      border-left: 4px solid #28a745;
-      border-radius: 5px;
-    }
-
-    .module-block h3 {
-      margin-top: 0;
-      color: #28a745;
-    }
-
-    label {
-      display: block;
-      margin: 6px 0;
-    }
-
-    input[type="checkbox"] {
-      transform: scale(1.1);
-      margin-right: 8px;
-      accent-color: #0078D4;
-    }
-
-    .progress-bar {
-      background-color: #e0e0e0;
-      border-radius: 5px;
-      overflow: hidden;
-      height: 18px;
-      margin-top: 10px;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background-color: #28a745;
-      width: 0%;
-      transition: width 0.3s ease;
-    }
+    .day{border-left:6px solid var(--blue)}
+    .day h2{margin:.2rem 0 1rem;color:var(--blue)}
+    .module{margin-top:14px;padding:12px;background:#f9f9ff;border-left:4px solid var(--green);border-radius:8px}
+    .module h3{margin:.1rem 0 .6rem;color:var(--green)}
+    label{display:block;margin:6px 0}
+    input[type=checkbox]{transform:scale(1.1);margin-right:8px;accent-color:var(--blue)}
+    .bar{height:18px;background:#e5e7eb;border-radius:9px;overflow:hidden;margin-top:8px}
+    .fill{height:100%;width:0;background:var(--green);transition:width .3s ease}
   </style>
 </head>
 <body>
   <header>
     <h1>📊 Daily Module Progress Tracker</h1>
-    <p>Track your study progress day by day</p>
+    <p>Track RNBP and Respite modules day by day</p>
   </header>
 
-  <!-- SEPT 8 -->
-  <section class="day-section">
-    <h2>Monday, Sept 8</h2>
+  <main class="wrap">
+    <section class="card timer">
+      <h2>⏱ Study Timer</h2>
+      <p>Stay focused with 25‑minute blocks.</p>
+      <div id="timerDisplay" class="display">25:00</div>
+      <button onclick="startTimer()">Start</button>
+      <button onclick="resetTimer()">Reset</button>
+    </section>
 
-    <div class="module-block">
-      <h3>📘 NRSG 103</h3>
-      <label><input type="checkbox" class="d8-nrsg103" /> Orientation Attended</label>
-      <label><input type="checkbox" class="d8-nrsg103" /> Intro Reading</label>
-      <div class="progress-bar"><div id="d8-nrsg103-progress" class="progress-fill"></div></div>
-    </div>
+    <section class="card day">
+      <h2>Monday, Sept 8</h2>
+      <div class="module">
+        <h3>📘 NRSG 103</h3>
+        <label><input type="checkbox" class="d8-nrsg103"> Orientation Attended</label>
+        <label><input type="checkbox" class="d8-nrsg103"> Intro Reading</label>
+        <div class="bar"><div id="d8-nrsg103-progress" class="fill"></div></div>
+      </div>
+      <div class="module">
+        <h3>🟡 Respite: Orientation</h3>
+        <label><input type="checkbox" class="d8-respite1"> Welcome Video</label>
+        <label><input type="checkbox" class="d8-respite1"> Module Survey</label>
+        <div class="bar"><div id="d8-respite1-progress" class="fill"></div></div>
+      </div>
+    </section>
 
-    <div class="module-block">
-      <h3>🟡 Respite: Orientation</h3>
-      <label><input type="checkbox" class="d8-respite1" /> Welcome Video</label>
-      <label><input type="checkbox" class="d8-respite1" /> Module Survey</label>
-      <div class="progress-bar"><div id="d8-respite1-progress" class="progress-fill"></div></div>
-    </div>
-  </section>
+    <section class="card day">
+      <h2>Tuesday, Sept 9</h2>
+      <div class="module">
+        <h3>📘 NRSG 103</h3>
+        <label><input type="checkbox" class="d9-nrsg103"> Reading Completed</label>
+        <label><input type="checkbox" class="d9-nrsg103"> Quiz Started</label>
+        <div class="bar"><div id="d9-nrsg103-progress" class="fill"></div></div>
+      </div>
+      <div class="module">
+        <h3>🟡 Respite: Lesson 1</h3>
+        <label><input type="checkbox" class="d9-respite1"> Lesson Prep</label>
+        <label><input type="checkbox" class="d9-respite1"> Reflection Notes</label>
+        <div class="bar"><div id="d9-respite1-progress" class="fill"></div></div>
+      </div>
+    </section>
 
-  <!-- SEPT 9 -->
-  <section class="day-section">
-    <h2>Tuesday, Sept 9</h2>
-
-    <div class="module-block">
-      <h3>📘 NRSG 103</h3>
-      <label><input type="checkbox" class="d9-nrsg103" /> Reading Completed</label>
-      <label><input type="checkbox" class="d9-nrsg103" /> Quiz Started</label>
-      <div class="progress-bar"><div id="d9-nrsg103-progress" class="progress-fill"></div></div>
-    </div>
-
-    <div class="module-block">
-      <h3>🟡 Respite: Lesson 1</h3>
-      <label><input type="checkbox" class="d9-respite1" /> Lesson Prep</label>
-      <label><input type="checkbox" class="d9-respite1" /> Reflection Notes</label>
-      <div class="progress-bar"><div id="d9-respite1-progress" class="progress-fill"></div></div>
-    </div>
-  </section>
-
-  <!-- SEPT 10 -->
-  <section class="day-section">
-    <h2>Wednesday, Sept 10</h2>
-
-    <div class="module-block">
-      <h3>📘 NRSG 106</h3>
-      <label><input type="checkbox" class="d10-nrsg106" /> Module Review</label>
-      <label><input type="checkbox" class="d10-nrsg106" /> Skills Lab Prep</label>
-      <div class="progress-bar"><div id="d10-nrsg106-progress" class="progress-fill"></div></div>
-    </div>
-
-    <div class="module-block">
-      <h3>🟡 Respite: Quiz</h3>
-      <label><input type="checkbox" class="d10-respite2" /> Quiz Attempted</label>
-      <label><input type="checkbox" class="d10-respite2" /> Review Submitted</label>
-      <div class="progress-bar"><div id="d10-respite2-progress" class="progress-fill"></div></div>
-    </div>
-  </section>
+    <section class="card day">
+      <h2>Wednesday, Sept 10</h2>
+      <div class="module">
+        <h3>📘 NRSG 106</h3>
+        <label><input type="checkbox" class="d10-nrsg106"> Module Review</label>
+        <label><input type="checkbox" class="d10-nrsg106"> Skills Lab Prep</label>
+        <div class="bar"><div id="d10-nrsg106-progress" class="fill"></div></div>
+      </div>
+      <div class="module">
+        <h3>🟡 Respite: Quiz</h3>
+        <label><input type="checkbox" class="d10-respite2"> Quiz Attempted</label>
+        <label><input type="checkbox" class="d10-respite2"> Review Submitted</label>
+        <div class="bar"><div id="d10-respite2-progress" class="fill"></div></div>
+      </div>
+    </section>
+  </main>
 
   <script>
-    function updateProgress(className, progressId) {
-      const checkboxes = document.querySelectorAll(`input.${className}`);
-      const total = checkboxes.length;
-      const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
-      const percent = Math.round((checked / total) * 100);
-      document.getElementById(progressId).style.width = percent + "%";
-    }
+    // Timer
+    let t, left=25*60;
+    function show(){const m=Math.floor(left/60),s=left%60;document.getElementById('timerDisplay').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+    function startTimer(){clearInterval(t);t=setInterval(()=>{if(left>0){left--;show()}else{clearInterval(t);alert("⏰ Time's up! Take a break.")}},1000)}
+    function resetTimer(){clearInterval(t);left=25*60;show()}
+    show();
 
-    const modules = [
-      { class: "d8-nrsg103", id: "d8-nrsg103-progress" },
-      { class: "d8-respite1", id: "d8-respite1-progress" },
-      { class: "d9-nrsg103", id: "d9-nrsg103-progress" },
-      { class: "d9-respite1", id: "d9-respite1-progress" },
-      { class: "d10-nrsg106", id: "d10-nrsg106-progress" },
-      { class: "d10-respite2", id: "d10-respite2-progress" }
+    // Progress bars
+    function update(cls,id){const cbs=[...document.querySelectorAll(`input.${cls}`)];const total=cbs.length, done=cbs.filter(c=>c.checked).length;const pct=total?Math.round(done/total*100):0;document.getElementById(id).style.width=pct+'%'}
+    const blocks=[
+      {cls:'d8-nrsg103', id:'d8-nrsg103-progress'},
+      {cls:'d8-respite1', id:'d8-respite1-progress'},
+      {cls:'d9-nrsg103', id:'d9-nrsg103-progress'},
+      {cls:'d9-respite1', id:'d9-respite1-progress'},
+      {cls:'d10-nrsg106', id:'d10-nrsg106-progress'},
+      {cls:'d10-respite2', id:'d10-respite2-progress'}
     ];
-
-    modules.forEach(module => {
-      document.querySelectorAll(`input.${module.class}`).forEach(cb =>
-        cb.addEventListener("change", () => updateProgress(module.class, module.id))
-      );
-      updateProgress(module.class, module.id);
+    blocks.forEach(b=>{
+      document.querySelectorAll(`input.${b.cls}`).forEach(cb=>cb.addEventListener('change',()=>update(b.cls,b.id)));
+      update(b.cls,b.id);
     });
   </script>
 </body>
