@@ -3,59 +3,80 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Karen's Study Planner</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Karen’s Study Planner — Dashboard</title>
+  <style>
+    :root{
+      --blue:#0078D4; --gold:#FFC107; --bg:#F4F8FC; --card:#FFFFFF; --text:#1f2937; --muted:#64748b; --shadow:0 6px 16px rgba(0,0,0,0.08);
+      --green:#28a745; --orange:#ff9800;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Segoe UI,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+    header{background:var(--blue);color:#fff;padding:28px 20px;text-align:center}
+    header h1{margin:0;font-size:1.9rem}
+    header p{margin:.4rem 0 0;opacity:.95}
+
+    .wrap{max-width:1100px;margin:22px auto;padding:0 16px}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+    .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:18px}
+    .link-card{display:block;text-decoration:none;color:inherit;border-left:6px solid var(--blue);transition:transform .15s ease, box-shadow .15s ease}
+    .link-card:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.12)}
+    .card h3{margin:.2rem 0 0.6rem;font-size:1.1rem}
+    .card p{margin:0;color:var(--muted);font-size:.95rem}
+
+    .summary{border-left:6px solid var(--green)}
+    .bar{height:18px;background:#e5e7eb;border-radius:9px;overflow:hidden;margin:.6rem 0}
+    .fill{height:100%;width:0;background:var(--green);transition:width .3s ease}
+
+    .updates{border-left:6px solid var(--orange)}
+    .updates ul{margin:.4rem 0 0;padding:0;list-style:none}
+    .updates li{margin:.35rem 0}
+    .updates strong{color:#0f172a}
+
+    footer{max-width:1100px;margin:26px auto 40px;padding:0 16px;color:var(--muted);font-size:.9rem}
+  </style>
 </head>
 <body>
   <header>
-    <h1>Karen's Dual Program Planner</h1>
-    <p>STUDY PLANNER</p>
+    <h1>📚 Karen’s Dual‑Program Planner</h1>
+    <p>RNBP (blue) + Respite (gold) — clear, calm, and focused</p>
   </header>
 
-  <section class="calendar">
-    <h2>📅 Master Calendar</h2>
-    <div class="calendar-grid">
-      <button class="day" onclick="showPlan('2025-09-08')">Sept 8</button>
-      <button class="day" onclick="showPlan('2025-09-09')">Sept 9</button>
-      <button class="day" onclick="showPlan('2025-09-10')">Sept 10</button>
-      <button class="day" onclick="showPlan('2025-09-11')">Sept 11</button>
-      <button class="day" onclick="showPlan('2025-09-12')">Sept 12</button>
-      <button class="day" onclick="showPlan('2025-09-13')">Sept 13</button>
-      <button class="day" onclick="showPlan('2025-09-14')">Sept 14</button>
-    </div>
-    <div id="daily-plan" class="plan-box"></div>
-  </section>
+  <main class="wrap">
+    <section class="grid" style="margin-bottom:16px">
+      <a class="card link-card" href="planner.html"><h3>📅 Daily Planner</h3><p>Tasks by day with times, weekly summary, and updates.</p></a>
+      <a class="card link-card" href="tracker.html" style="border-left-color:#28a745"><h3>📊 Progress Tracker</h3><p>Per‑day module checklists and progress bars + timer.</p></a>
+      <a class="card link-card" href="notes.html" style="border-left-color:#8b5cf6"><h3>📝 Notes</h3><p>Tagged, time‑stamped notes with a clickable archive.</p></a>
+      <a class="card link-card" href="resources.html" style="border-left-color:#0ea5e9"><h3>📚 Resource Library</h3><p>Modules, PDFs, videos, and clinical checklists.</p></a>
+      <a class="card link-card" href="journal.html" style="border-left-color:#ef4444"><h3>🔐 Private Journal</h3><p>Local‑only reflections with export.</p></a>
+      <a class="card link-card" href="timer.html" style="border-left-color:#ff9800"><h3>⏱ Standalone Timer</h3><p>Pomodoro with clean, focused UI.</p></a>
+    </section>
 
-  <section class="links">
-    <p><a href="notes.html">📝 Notes Page</a></p>
-    <p><a href="tracker.html">✅ Progress Tracker</a></p>
-    <p><a href="resources.html">📚 Resource Library</a></p>
-    <p><a href="timer.html">⏱ Study Timer</a></p>
-  </section>
+    <section class="card summary">
+      <h3>📊 Weekly Progress</h3>
+      <div class="bar"><div id="weeklyFill" class="fill"></div></div>
+      <p id="weeklyCount">0 of 0 tasks completed</p>
+    </section>
 
-  <footer>
-    <p>Made with 💙 by Karen</p>
-  </footer>
-<p><a href="planner.html">📅 Assignment Planner</a></p>
+    <section class="card updates" style="margin-top:16px">
+      <h3>🔮 Upcoming Lessons & Deadlines</h3>
+      <ul>
+        <li><strong>Sept 15</strong> — NRSG 103 Quiz #1 opens</li>
+        <li><strong>Sept 18</strong> — NRSG 106 Skills Lab (in‑person)</li>
+        <li><strong>Sept 20</strong> — NRSG 120 Case Study due</li>
+        <li><strong>Sept 16</strong> — Respite Lesson 3: Emergency Situations</li>
+        <li><strong>Sept 19</strong> — Respite Group Discussion (Zoom)</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="wrap">Made with 💙 by Karen & Copilot</footer>
 
   <script>
-    const plans = {
-      "2025-09-08": "🧭 RNBP Orientation at 1pm. Evening: Respite intro readings.",
-      "2025-09-09": "📘 RNBP: NRSG 103 readings. Respite: Lesson 1 prep.",
-      "2025-09-10": "📗 RNBP: NRSG 106 module review. Light Respite quiz.",
-      "2025-09-11": "📙 RNBP: NRSG 120 discussion post. Respite: Lesson 2 async.",
-      "2025-09-12": "📚 RNBP: Quiz prep. Respite: Cultural Competence module.",
-      "2025-09-13": "🧪 In-person Respite WIL Prep (full day). No evening study.",
-      "2025-09-14": "📝 RNBP: Assignment outline. Respite: catch-up readings."
-    };
-
-    function showPlan(date) {
-      const plan = plans[date] || "No plan available for this day.";
-      document.getElementById("daily-plan").innerHTML = `<h3>📅 ${date}</h3><p>${plan}</p>`;
-    }
-
-    const today = new Date().toISOString().split('T')[0];
-    if (plans[today]) showPlan(today);
+    // Optional: compute weekly progress by scanning checkboxes on planner.html if embedded.
+    // Here we just simulate a friendly start value.
+    const total=18, done=7, pct=Math.round(done/total*100);
+    document.getElementById('weeklyFill').style.width=pct+'%';
+    document.getElementById('weeklyCount').textContent=`${done} of ${total} tasks completed`;
   </script>
 </body>
 </html>
