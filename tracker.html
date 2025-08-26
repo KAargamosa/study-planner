@@ -3,49 +3,51 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Daily Module Progress Tracker</title>
+<title>Daily Module Tracker</title>
 <style>
-:root{--blue:#0078D4;--gold:#FFC107;--bg:#F4F8FC;--card:#fff;--shadow:0 6px 16px rgba(0,0,0,.08);--green:#28a745;--orange:#ff9800;--darkbg:#1f2937;--darktext:#f4f4f4}
+:root{--blue:#0078D4;--gold:#FFC107;--bg:#F4F8FC;--card:#fff;--green:#28a745;--orange:#ff9800;--darkbg:#1f2937;--darktext:#f4f4f4;--shadow:0 6px 16px rgba(0,0,0,.08)}
 body{margin:0;font-family:Segoe UI,sans-serif;background:var(--bg);color:#1f2937;transition:background .3s,color .3s;}
 body.dark{background:var(--darkbg);color:var(--darktext);}
 header{background:var(--blue);color:#fff;padding:20px;text-align:center}
-.toggle-btn{background:var(--blue);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;margin-top:10px;}
+header a{color:white;text-decoration:none;}
+.toggle-btn{background:var(--blue);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;margin:6px;}
 .wrap{max-width:1000px;margin:22px auto;padding:0 16px}
 .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:18px;margin-bottom:16px}
-.timer{border-left:6px solid var(--orange);text-align:center}
 .display{font-size:2rem;font-weight:bold;color:var(--blue);margin:10px 0}
-button{margin:6px;padding:10px 16px;border:none;border-radius:8px;background:var(--blue);color:#fff;cursor:pointer}
 .module{margin-top:14px;padding:12px;background:#f9f9ff;border-left:4px solid var(--green);border-radius:8px}
 .tag{padding:2px 6px;border-radius:4px;font-size:.75rem;font-weight:600;color:#fff;margin-right:6px;}
 .tag.rnbp{background:var(--blue);}
 .tag.respite{background:var(--gold);color:#000;}
-body.dark .module{background:#334155;}
+.bar{height:18px;background:#e5e7eb;border-radius:9px;overflow:hidden;margin-top:8px}
+.fill{height:100%;width:0;background:var(--green);transition:width .3s ease}
 </style>
 </head>
 <body>
 <header>
-<h1>📊 Daily Module Progress Tracker</h1>
-<p>Track RNBP and Respite modules day by day</p>
-<button class="toggle-btn" onclick="toggleDark()">Toggle Dark Mode</button>
+  <h1><a href="index.html">📊 Module Tracker</a></h1>
+  <p>Track per‑day progress and timer</p>
+  <button class="toggle-btn" onclick="toggleDark()">Toggle Dark Mode</button>
 </header>
 
 <main class="wrap">
-<section class="card timer">
+<section class="card">
   <h2>⏱ Study Timer</h2>
   <div id="timerDisplay" class="display">25:00</div>
   <button onclick="startTimer()">Start</button>
   <button onclick="resetTimer()">Reset</button>
 </section>
 
-<section class="card">
-  <h2>Monday, Sept 8</h2>
-  <div class="module">
-    <h3><span class="tag rnbp">RNBP</span> NRSG 103</h3>
-    <label><input type="checkbox" class="d8-nrsg103"> Orientation</label>
-  </div>
+<section class="card module">
+  <h3><span class="tag rnbp">RNBP</span> NRSG 103</h3>
+  <label><input type="checkbox" /> Orientation</label>
+  <div class="bar"><div id="mod1" class="fill"></div></div>
 </section>
 </main>
 
 <script>
-let t,left=25*60;
-function show(){const m=Math.floor(left/60
+// Shared dark mode
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  localStorage.setItem('theme', document.body.classList.contains('dark')?'dark':'light');
+}
+if(localStorage.getItem('theme')==='dark'){document.body
