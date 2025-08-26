@@ -4,108 +4,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Study Timer</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      background-color: #f4f8fc;
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-
-    header {
-      background-color: #0078D4;
-      color: white;
-      padding: 20px;
-    }
-
-    .timer-box {
-      margin: 40px auto;
-      padding: 30px;
-      max-width: 400px;
-      background-color: #ffffff;
-      border-left: 6px solid #ff9800;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .timer-display {
-      font-size: 3em;
-      font-weight: bold;
-      color: #0078D4;
-      margin: 20px 0;
-    }
-
-    button {
-      margin: 10px;
-      padding: 12px 20px;
-      font-size: 1em;
-      background-color: #0078D4;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #005fa3;
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #666;
-    }
+    :root{--blue:#0078D4;--bg:#F4F8FC;--card:#fff;--shadow:0 6px 16px rgba(0,0,0,.08)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Segoe UI,system-ui,sans-serif;background:var(--bg);text-align:center}
+    header{background:var(--blue);color:#fff;padding:24px}
+    .box{margin:40px auto;padding:30px;max-width:420px;background:var(--card);border-left:6px solid #ff9800;border-radius:12px;box-shadow:var(--shadow)}
+    .display{font-size:3rem;font-weight:800;color:var(--blue);margin:18px 0}
+    button{margin:8px;padding:12px 18px;border:none;border-radius:10px;background:var(--blue);color:#fff;cursor:pointer}
+    button:hover{background:#005fa3}
   </style>
 </head>
 <body>
   <header>
     <h1>⏱ Study Timer</h1>
-    <p>Stay focused with Pomodoro blocks</p>
+    <p>Pomodoro focus blocks</p>
   </header>
 
-  <section class="timer-box">
-    <div class="timer-display" id="timer">25:00</div>
-    <button onclick="startTimer()">Start</button>
-    <button onclick="resetTimer()">Reset</button>
+  <section class="box">
+    <div id="time" class="display">25:00</div>
+    <button onclick="start()">Start</button>
+    <button onclick="reset()">Reset</button>
   </section>
 
-  <footer>
-    <p>Made with 💙 by Karen & Copilot</p>
-  </footer>
-
   <script>
-    let timer;
-    let timeLeft = 25 * 60;
-
-    function updateTimerDisplay() {
-      const minutes = Math.floor(timeLeft / 60);
-      const seconds = timeLeft % 60;
-      document.getElementById("timer").textContent =
-        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    }
-
-    function startTimer() {
-      clearInterval(timer);
-      timer = setInterval(() => {
-        if (timeLeft > 0) {
-          timeLeft--;
-          updateTimerDisplay();
-        } else {
-          clearInterval(timer);
-          alert("⏰ Time's up! Take a break.");
-        }
-      }, 1000);
-    }
-
-    function resetTimer() {
-      clearInterval(timer);
-      timeLeft = 25 * 60;
-      updateTimerDisplay();
-    }
-
-    updateTimerDisplay();
+    let iv, left=25*60;
+    function draw(){const m=Math.floor(left/60),s=left%60;document.getElementById('time').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+    function start(){clearInterval(iv);iv=setInterval(()=>{if(left>0){left--;draw()}else{clearInterval(iv);alert("⏰ Time's up! Take a break.")}},1000)}
+    function reset(){clearInterval(iv);left=25*60;draw()}
+    draw();
   </script>
 </body>
 </html>
