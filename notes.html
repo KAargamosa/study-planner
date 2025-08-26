@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Notes | Karen's Planner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>📝 Notes</h1>
+    <p>Jot down your thoughts, assignments, or reflections</p>
+  </header>
+
+  <section class="note-section">
+    <label for="program">Program:</label>
+    <select id="program">
+      <option value="RNBP">RNBP</option>
+      <option value="Respite">Respite Care</option>
+    </select>
+
+    <textarea id="noteArea" placeholder="Start typing your notes here..."></textarea>
+    <button onclick="saveNote()">Save Note</button>
+    <div id="savedNotes"></div>
+  </section>
+
+  <script>
+    function saveNote() {
+      const program = document.getElementById("program").value;
+      const note = document.getElementById("noteArea").value;
+      const date = new Date().toLocaleString();
+      const entry = `<p><strong>${date} [${program}]</strong><br>${note}</p>`;
+      document.getElementById("savedNotes").innerHTML += entry;
+      document.getElementById("noteArea").value = "";
+    }
+  </script>
+</body>
+</html>
