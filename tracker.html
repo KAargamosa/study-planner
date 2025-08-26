@@ -1,118 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Daily Module Progress Tracker</title>
-  <style>
-    :root{--blue:#0078D4;--bg:#F4F8FC;--card:#fff;--shadow:0 6px 16px rgba(0,0,0,.08);--green:#28a745;--orange:#ff9800;--text:#1f2937}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Segoe UI,system-ui,sans-serif;background:var(--bg);color:var(--text)}
-    header{background:var(--blue);color:#fff;padding:24px;text-align:center}
-    .wrap{max-width:1000px;margin:22px auto;padding:0 16px}
-
-    .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:18px;margin-bottom:16px}
-    .timer{border-left:6px solid var(--orange);text-align:center}
-    .timer .display{font-size:2.4rem;font-weight:700;color:var(--blue);margin:10px 0}
-    .timer button{margin:6px;padding:10px 16px;border:none;border-radius:8px;background:var(--blue);color:#fff;cursor:pointer}
-    .timer button:hover{background:#005fa3}
-
-    .day{border-left:6px solid var(--blue)}
-    .day h2{margin:.2rem 0 1rem;color:var(--blue)}
-    .module{margin-top:14px;padding:12px;background:#f9f9ff;border-left:4px solid var(--green);border-radius:8px}
-    .module h3{margin:.1rem 0 .6rem;color:var(--green)}
-    label{display:block;margin:6px 0}
-    input[type=checkbox]{transform:scale(1.1);margin-right:8px;accent-color:var(--blue)}
-    .bar{height:18px;background:#e5e7eb;border-radius:9px;overflow:hidden;margin-top:8px}
-    .fill{height:100%;width:0;background:var(--green);transition:width .3s ease}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Daily Module Progress Tracker</title>
+<style>
+:root{--blue:#0078D4;--gold:#FFC107;--bg:#F4F8FC;--card:#fff;--shadow:0 6px 16px rgba(0,0,0,.08);--green:#28a745;--orange:#ff9800;--darkbg:#1f2937;--darktext:#f4f4f4}
+body{margin:0;font-family:Segoe UI,sans-serif;background:var(--bg);color:#1f2937;transition:background .3s,color .3s;}
+body.dark{background:var(--darkbg);color:var(--darktext);}
+header{background:var(--blue);color:#fff;padding:20px;text-align:center}
+.toggle-btn{background:var(--blue);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;margin-top:10px;}
+.wrap{max-width:1000px;margin:22px auto;padding:0 16px}
+.card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:18px;margin-bottom:16px}
+.timer{border-left:6px solid var(--orange);text-align:center}
+.display{font-size:2rem;font-weight:bold;color:var(--blue);margin:10px 0}
+button{margin:6px;padding:10px 16px;border:none;border-radius:8px;background:var(--blue);color:#fff;cursor:pointer}
+.module{margin-top:14px;padding:12px;background:#f9f9ff;border-left:4px solid var(--green);border-radius:8px}
+.tag{padding:2px 6px;border-radius:4px;font-size:.75rem;font-weight:600;color:#fff;margin-right:6px;}
+.tag.rnbp{background:var(--blue);}
+.tag.respite{background:var(--gold);color:#000;}
+body.dark .module{background:#334155;}
+</style>
 </head>
 <body>
-  <header>
-    <h1>📊 Daily Module Progress Tracker</h1>
-    <p>Track RNBP and Respite modules day by day</p>
-  </header>
+<header>
+<h1>📊 Daily Module Progress Tracker</h1>
+<p>Track RNBP and Respite modules day by day</p>
+<button class="toggle-btn" onclick="toggleDark()">Toggle Dark Mode</button>
+</header>
 
-  <main class="wrap">
-    <section class="card timer">
-      <h2>⏱ Study Timer</h2>
-      <p>Stay focused with 25‑minute blocks.</p>
-      <div id="timerDisplay" class="display">25:00</div>
-      <button onclick="startTimer()">Start</button>
-      <button onclick="resetTimer()">Reset</button>
-    </section>
+<main class="wrap">
+<section class="card timer">
+  <h2>⏱ Study Timer</h2>
+  <div id="timerDisplay" class="display">25:00</div>
+  <button onclick="startTimer()">Start</button>
+  <button onclick="resetTimer()">Reset</button>
+</section>
 
-    <section class="card day">
-      <h2>Monday, Sept 8</h2>
-      <div class="module">
-        <h3>📘 NRSG 103</h3>
-        <label><input type="checkbox" class="d8-nrsg103"> Orientation Attended</label>
-        <label><input type="checkbox" class="d8-nrsg103"> Intro Reading</label>
-        <div class="bar"><div id="d8-nrsg103-progress" class="fill"></div></div>
-      </div>
-      <div class="module">
-        <h3>🟡 Respite: Orientation</h3>
-        <label><input type="checkbox" class="d8-respite1"> Welcome Video</label>
-        <label><input type="checkbox" class="d8-respite1"> Module Survey</label>
-        <div class="bar"><div id="d8-respite1-progress" class="fill"></div></div>
-      </div>
-    </section>
+<section class="card">
+  <h2>Monday, Sept 8</h2>
+  <div class="module">
+    <h3><span class="tag rnbp">RNBP</span> NRSG 103</h3>
+    <label><input type="checkbox" class="d8-nrsg103"> Orientation</label>
+  </div>
+</section>
+</main>
 
-    <section class="card day">
-      <h2>Tuesday, Sept 9</h2>
-      <div class="module">
-        <h3>📘 NRSG 103</h3>
-        <label><input type="checkbox" class="d9-nrsg103"> Reading Completed</label>
-        <label><input type="checkbox" class="d9-nrsg103"> Quiz Started</label>
-        <div class="bar"><div id="d9-nrsg103-progress" class="fill"></div></div>
-      </div>
-      <div class="module">
-        <h3>🟡 Respite: Lesson 1</h3>
-        <label><input type="checkbox" class="d9-respite1"> Lesson Prep</label>
-        <label><input type="checkbox" class="d9-respite1"> Reflection Notes</label>
-        <div class="bar"><div id="d9-respite1-progress" class="fill"></div></div>
-      </div>
-    </section>
-
-    <section class="card day">
-      <h2>Wednesday, Sept 10</h2>
-      <div class="module">
-        <h3>📘 NRSG 106</h3>
-        <label><input type="checkbox" class="d10-nrsg106"> Module Review</label>
-        <label><input type="checkbox" class="d10-nrsg106"> Skills Lab Prep</label>
-        <div class="bar"><div id="d10-nrsg106-progress" class="fill"></div></div>
-      </div>
-      <div class="module">
-        <h3>🟡 Respite: Quiz</h3>
-        <label><input type="checkbox" class="d10-respite2"> Quiz Attempted</label>
-        <label><input type="checkbox" class="d10-respite2"> Review Submitted</label>
-        <div class="bar"><div id="d10-respite2-progress" class="fill"></div></div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    // Timer
-    let t, left=25*60;
-    function show(){const m=Math.floor(left/60),s=left%60;document.getElementById('timerDisplay').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
-    function startTimer(){clearInterval(t);t=setInterval(()=>{if(left>0){left--;show()}else{clearInterval(t);alert("⏰ Time's up! Take a break.")}},1000)}
-    function resetTimer(){clearInterval(t);left=25*60;show()}
-    show();
-
-    // Progress bars
-    function update(cls,id){const cbs=[...document.querySelectorAll(`input.${cls}`)];const total=cbs.length, done=cbs.filter(c=>c.checked).length;const pct=total?Math.round(done/total*100):0;document.getElementById(id).style.width=pct+'%'}
-    const blocks=[
-      {cls:'d8-nrsg103', id:'d8-nrsg103-progress'},
-      {cls:'d8-respite1', id:'d8-respite1-progress'},
-      {cls:'d9-nrsg103', id:'d9-nrsg103-progress'},
-      {cls:'d9-respite1', id:'d9-respite1-progress'},
-      {cls:'d10-nrsg106', id:'d10-nrsg106-progress'},
-      {cls:'d10-respite2', id:'d10-respite2-progress'}
-    ];
-    blocks.forEach(b=>{
-      document.querySelectorAll(`input.${b.cls}`).forEach(cb=>cb.addEventListener('change',()=>update(b.cls,b.id)));
-      update(b.cls,b.id);
-    });
-  </script>
-</body>
-</html>
+<script>
+let t,left=25*60;
+function show(){const m=Math.floor(left/60
