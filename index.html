@@ -1,82 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Karen’s Study Planner — Dashboard</title>
-  <style>
-    :root{
-      --blue:#0078D4; --gold:#FFC107; --bg:#F4F8FC; --card:#FFFFFF; --text:#1f2937; --muted:#64748b; --shadow:0 6px 16px rgba(0,0,0,0.08);
-      --green:#28a745; --orange:#ff9800;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Segoe UI,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
-    header{background:var(--blue);color:#fff;padding:28px 20px;text-align:center}
-    header h1{margin:0;font-size:1.9rem}
-    header p{margin:.4rem 0 0;opacity:.95}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Karen’s Dual‑Program Planner</title>
+<style>
+:root{
+  --blue:#0078D4; --gold:#FFC107; --green:#28a745; --orange:#ff9800;
+  --bg:#F4F8FC; --card:#fff; --text:#1f2937; --muted:#64748b;
+  --shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Segoe UI,system-ui,sans-serif;background:var(--bg);color:var(--text);}
+header{background:linear-gradient(135deg,var(--blue),#0096FF);color:#fff;padding:40px 20px;text-align:center;box-shadow:var(--shadow);}
+header h1{font-size:2rem;margin-bottom:.5rem;}
+header p{font-size:1.1rem;opacity:0.9;}
+.hero{max-width:900px;margin:20px auto;text-align:center;}
+.hero-quote{font-style:italic;color:var(--muted);margin-top:10px;}
 
-    .wrap{max-width:1100px;margin:22px auto;padding:0 16px}
-    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
-    .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:18px}
-    .link-card{display:block;text-decoration:none;color:inherit;border-left:6px solid var(--blue);transition:transform .15s ease, box-shadow .15s ease}
-    .link-card:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.12)}
-    .card h3{margin:.2rem 0 0.6rem;font-size:1.1rem}
-    .card p{margin:0;color:var(--muted);font-size:.95rem}
+.wrap{max-width:1100px;margin:30px auto;padding:0 16px;}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:20px;transition:transform .2s ease, box-shadow .2s ease;position:relative;overflow:hidden;}
+.card:hover{transform:translateY(-5px);box-shadow:0 10px 25px rgba(0,0,0,0.12);}
+.card h3{margin-bottom:.5rem;}
+.card p{color:var(--muted);font-size:.95rem;}
+.icon-badge{font-size:2rem;margin-bottom:.5rem;display:inline-block;}
 
-    .summary{border-left:6px solid var(--green)}
-    .bar{height:18px;background:#e5e7eb;border-radius:9px;overflow:hidden;margin:.6rem 0}
-    .fill{height:100%;width:0;background:var(--green);transition:width .3s ease}
+.summary{border-left:6px solid var(--green);}
+.bar{height:18px;background:#e5e7eb;border-radius:9px;overflow:hidden;margin:.6rem 0;}
+.fill{height:100%;width:0;background:var(--green);transition:width .3s ease;}
 
-    .updates{border-left:6px solid var(--orange)}
-    .updates ul{margin:.4rem 0 0;padding:0;list-style:none}
-    .updates li{margin:.35rem 0}
-    .updates strong{color:#0f172a}
+.updates{border-left:6px solid var(--orange);}
+.updates ul{list-style:none;margin-top:.5rem;}
+.updates li{margin:.35rem 0;}
 
-    footer{max-width:1100px;margin:26px auto 40px;padding:0 16px;color:var(--muted);font-size:.9rem}
-  </style>
+footer{max-width:1100px;margin:26px auto 40px;padding:0 16px;color:var(--muted);font-size:.9rem;text-align:center;}
+</style>
 </head>
 <body>
-  <header>
-    <h1>📚 Karen’s Dual‑Program Planner</h1>
-    <p>RNBP (blue) + Respite (gold) — clear, calm, and focused</p>
-  </header>
+<header>
+  <h1>📚 Karen’s Dual‑Program Planner</h1>
+  <p>Organized. Motivated. Ready for anything.</p>
+</header>
 
-  <main class="wrap">
-    <section class="grid" style="margin-bottom:16px">
-      <a class="card link-card" href="planner.html"><h3>📅 Daily Planner</h3><p>Tasks by day with times, weekly summary, and updates.</p></a>
-      <a class="card link-card" href="tracker.html" style="border-left-color:#28a745"><h3>📊 Progress Tracker</h3><p>Per‑day module checklists and progress bars + timer.</p></a>
-      <a class="card link-card" href="notes.html" style="border-left-color:#8b5cf6"><h3>📝 Notes</h3><p>Tagged, time‑stamped notes with a clickable archive.</p></a>
-      <a class="card link-card" href="resources.html" style="border-left-color:#0ea5e9"><h3>📚 Resource Library</h3><p>Modules, PDFs, videos, and clinical checklists.</p></a>
-      <a class="card link-card" href="journal.html" style="border-left-color:#ef4444"><h3>🔐 Private Journal</h3><p>Local‑only reflections with export.</p></a>
-      <a class="card link-card" href="timer.html" style="border-left-color:#ff9800"><h3>⏱ Standalone Timer</h3><p>Pomodoro with clean, focused UI.</p></a>
-    </section>
+<section class="hero">
+  <p class="hero-quote">“Success is the sum of small efforts, repeated day in and day out.”</p>
+</section>
 
-    <section class="card summary">
-      <h3>📊 Weekly Progress</h3>
-      <div class="bar"><div id="weeklyFill" class="fill"></div></div>
-      <p id="weeklyCount">0 of 0 tasks completed</p>
-    </section>
+<main class="wrap">
+  <section class="grid">
+    <a class="card" href="planner.html" style="border-left:6px solid var(--blue);color:inherit;text-decoration:none;">
+      <div class="icon-badge">📅</div>
+      <h3>Daily Planner</h3>
+      <p>Plan tasks by day or by module, track deadlines, and switch views in seconds.</p>
+    </a>
+    <a class="card" href="tracker.html" style="border-left:6px solid var(--green);color:inherit;text-decoration:none;">
+      <div class="icon-badge">📊</div>
+      <h3>Progress Tracker</h3>
+      <p>Visual bars for each course and day, plus a built‑in study timer.</p>
+    </a>
+    <a class="card" href="notes.html" style="border-left:6px solid #8b5cf6;color:inherit;text-decoration:none;">
+      <div class="icon-badge">📝</div>
+      <h3>Notes</h3>
+      <p>Tag, date‑stamp, and search all your notes instantly.</p>
+    </a>
+    <a class="card" href="resources.html" style="border-left:6px solid var(--blue);color:inherit;text-decoration:none;">
+      <div class="icon-badge">📚</div>
+      <h3>Resource Library</h3>
+      <p>All your learning materials, neatly organized by program.</p>
+    </a>
+    <a class="card" href="journal.html" style="border-left:6px solid #ef4444;color:inherit;text-decoration:none;">
+      <div class="icon-badge">🔐</div>
+      <h3>Private Journal</h3>
+      <p>Capture reflections privately, with export options for safekeeping.</p>
+    </a>
+    <a class="card" href="timer.html" style="border-left:6px solid var(--orange);color:inherit;text-decoration:none;">
+      <div class="icon-badge">⏱</div>
+      <h3>Study Timer</h3>
+      <p>Stay on task with 25‑minute Pomodoro blocks and breaks.</p>
+    </a>
+  </section>
 
-    <section class="card updates" style="margin-top:16px">
-      <h3>🔮 Upcoming Lessons & Deadlines</h3>
-      <ul>
-        <li><strong>Sept 15</strong> — NRSG 103 Quiz #1 opens</li>
-        <li><strong>Sept 18</strong> — NRSG 106 Skills Lab (in‑person)</li>
-        <li><strong>Sept 20</strong> — NRSG 120 Case Study due</li>
-        <li><strong>Sept 16</strong> — Respite Lesson 3: Emergency Situations</li>
-        <li><strong>Sept 19</strong> — Respite Group Discussion (Zoom)</li>
-      </ul>
-    </section>
-  </main>
+  <section class="card summary" style="margin-top:20px;">
+    <h3>📊 Weekly Progress</h3>
+    <div class="bar"><div id="weeklyFill" class="fill"></div></div>
+    <p id="weeklyCount">0 of 0 tasks completed</p>
+  </section>
 
-  <footer class="wrap">Made with 💙 by Karen & Copilot</footer>
+  <section class="card updates" style="margin-top:20px;">
+    <h3>🔮 Upcoming Deadlines</h3>
+    <ul>
+      <li>Sept 15 — NRSG 103 Quiz #1</li>
+      <li>Sept 18 — NRSG 106 Skills Lab</li>
+      <li>Sept 20 — NRSG 120 Case Study</li>
+      <li>Sept 16 — Respite Lesson 3: Emergencies</li>
+    </ul>
+  </section>
+</main>
 
-  <script>
-    // Optional: compute weekly progress by scanning checkboxes on planner.html if embedded.
-    // Here we just simulate a friendly start value.
-    const total=18, done=7, pct=Math.round(done/total*100);
-    document.getElementById('weeklyFill').style.width=pct+'%';
-    document.getElementById('weeklyCount').textContent=`${done} of ${total} tasks completed`;
-  </script>
+<footer>Made with 💙 by Karen</footer>
+
+<script>
+const total=18, done=7;
+const pct=Math.round(done/total*100);
+document.getElementById('weeklyFill').style.width=pct+'%';
+document.getElementById('weeklyCount').textContent=`${done} of ${total} tasks completed`;
+</script>
 </body>
 </html>
