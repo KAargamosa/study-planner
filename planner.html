@@ -6,34 +6,64 @@
   <title>Daily Assignment Tracker</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    body {
+      background-color: #f4f8fc;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #0078D4;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
     .day-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      background-color: #fff;
-      border-left: 4px solid #0078D4;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin: 20px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-left: 6px solid #0078D4;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     }
 
     .day-section h2 {
+      margin-top: 0;
       color: #0078D4;
+      font-size: 1.4em;
     }
 
-    .day-section ul {
+    ul {
       list-style: none;
       padding-left: 0;
     }
 
-    .day-section li {
-      margin: 8px 0;
+    li {
+      margin: 12px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .day-section input[type="checkbox"] {
+    input[type="checkbox"] {
+      transform: scale(1.2);
       margin-right: 10px;
+      accent-color: #0078D4;
+    }
+
+    label {
+      flex-grow: 1;
+      font-size: 1em;
     }
 
     .due-time {
-      font-size: 0.9em;
-      color: #555;
+      background-color: #e0f0ff;
+      color: #0078D4;
+      padding: 4px 8px;
+      border-radius: 5px;
+      font-size: 0.85em;
       margin-left: 10px;
     }
   </style>
@@ -47,21 +77,34 @@
   <section class="day-section">
     <h2>Monday, Sept 8</h2>
     <ul>
-      <li><label><input type="checkbox" /> RNBP Orientation <span class="due-time">1:00 PM</span></label></li>
-      <li><label><input type="checkbox" /> Respite: Intro Reading <span class="due-time">Evening</span></label></li>
+      <li><label><input type="checkbox" /> RNBP Orientation</label><span class="due-time">1:00 PM</span></li>
+      <li><label><input type="checkbox" /> Respite: Intro Reading</label><span class="due-time">Evening</span></li>
     </ul>
   </section>
 
   <section class="day-section">
     <h2>Tuesday, Sept 9</h2>
     <ul>
-      <li><label><input type="checkbox" /> NRSG 103 Reading <span class="due-time">Morning</span></label></li>
-      <li><label><input type="checkbox" /> Respite Lesson 1 Prep <span class="due-time">Afternoon</span></label></li>
+      <li><label><input type="checkbox" /> NRSG 103 Reading</label><span class="due-time">Morning</span></li>
+      <li><label><input type="checkbox" /> Respite Lesson 1 Prep</label><span class="due-time">Afternoon</span></li>
     </ul>
   </section>
 
   <section class="day-section">
     <h2>Wednesday, Sept 10</h2>
     <ul>
-      <li><label><input type="checkbox" /> NRSG 106 Module Review <span class="due-time">Anytime</span></label></li>
-      <li><label><input type="checkbox" />
+      <li><label><input type="checkbox" /> NRSG 106 Module Review</label><span class="due-time">Anytime</span></li>
+      <li><label><input type="checkbox" /> Respite Quiz</label><span class="due-time">Evening</span></li>
+    </ul>
+  </section>
+
+  <section class="day-section">
+    <h2>Thursday, Sept 11</h2>
+    <ul>
+      <li><label><input type="checkbox" /> NRSG 120 Discussion Post</label><span class="due-time">Due by 5 PM</span></li>
+      <li><label><input type="checkbox" /> Respite Lesson 2 Async</label><span class="due-time">Evening</span></li>
+    </ul>
+  </section>
+
+  <section class="day-section">
+    <h2>Friday,
